@@ -1,6 +1,6 @@
 /*
- * spa.NAME.js
- * NAME module for SPA
+ * spa.chat.js
+ * chat feature module for SPA
 */
 
 /*jslint         browser: true, continue : true,
@@ -11,17 +11,22 @@
 */
 /*global $, spa */
 
-spa.NAME = (function () {
+spa.chat = (function () {
   //---------------- BEGIN MODULE SCOPE VARIABLES --------------
   var 
-    configMap = {},
+    configMap = {
+      main_html : String()
+        + '<div style="padding:1em; color:#fff;">'
+          + 'Say Hello to chat'
+        + '</div>'
+    },
     stateMap = { $container : null },
     jqueryMap = {},
-    setJqueryMap, initModule;
+
+    setJqueryMap, configModule, initModule;
   //----------------- END MODULE SCOPE VARIABLES ---------------
   
   //------------------- BEGIN UTILITY METHODS ------------------
-
   //-------------------- END UTILITY METHODS -------------------
 
   //--------------------- BEGIN DOM METHODS --------------------
@@ -37,6 +42,25 @@ spa.NAME = (function () {
   //-------------------- END EVENT HANDLERS --------------------
 
   //------------------- BEGIN PUBLIC METHODS -------------------
+  // Begin public method /configModule/
+  // Purpose    : Adjust configuration of allowed keys
+  // Arguments  : A map of settable keys and values
+  //   * color_name - color to use
+  // Settings   :
+  //   * configMap.settable_map declares allowed keys
+  // Returns    : true
+  // Throws     : none
+  //
+  configModule = function ( input_map ) {
+    spa.util.setConfigMap({
+      input_map    : input_map,
+      settable_map : configMap.settable_map,
+      config_map   : configMap
+    });
+    return true;
+  };
+  // End public method /configModule/
+
   // Begin public method /initModule/
   // Purpose    : Initialize module
   // Arguments  : 
@@ -45,8 +69,17 @@ spa.NAME = (function () {
   // Throws     : none
   //
     initModule =  function ( $container ) {
+      $container.html( configMap.main_html );
+      stateMap.$container = $container;
+      setJqueryMap();
+      return true;
     };
-  // End Public method /initModule/
-  return { initModule : initModule };
+  // End public method /initModule/
+
+  // return public methods
+  return { 
+    initModule : initModule,
+    initModule : initModule 
+  };
   //------------------- END PUBLIC METHODS ---------------------
 }());
